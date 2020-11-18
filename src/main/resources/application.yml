@@ -1,0 +1,15 @@
+server:
+  port: 8090
+  
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8888/auth/realms/spring-cloud-gateway-realm
+        
+        registration:
+           keycloak:
+            client-id: spring-cloud-gateway-client
+            client-secret: 92038d4f-4120-4056-84b9-aa123912e770
