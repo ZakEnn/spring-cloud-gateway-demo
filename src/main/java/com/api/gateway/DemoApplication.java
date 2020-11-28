@@ -36,6 +36,14 @@ public class DemoApplication {
 												.removeRequestHeader("Cookie")) // Prevents cookie being sent downstream
 								.uri("http://resource:9000")) // Taking advantage of docker naming
 						
+			            .route(p -> p
+			            		.host("*.hystrix.com")
+			            		.filters(f -> f
+			            				.hystrix(config -> config
+			            						.setName("mycmd")
+			            						.setFallbackUri("forward:/fallback")))
+			            		.uri("http://httpbin.org:80"))
+						
 						.route("hello", ps-> {
 							return ps.path("/hello")
 									.uri("lb://helloservice");
@@ -43,4 +51,7 @@ public class DemoApplication {
 						
 						.build();
 	}
+	
+  
+  
 }
