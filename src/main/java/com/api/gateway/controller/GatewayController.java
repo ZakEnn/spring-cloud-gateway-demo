@@ -12,4 +12,9 @@ public class GatewayController {
 	  public Mono<String> fallback() {
 	      return Mono.just("fallback");
 	  }
+	  
+	  @RequestMapping("/test")
+	  public Mono<String> test() {
+	      return Mono.just("test");
+	  }
 }
