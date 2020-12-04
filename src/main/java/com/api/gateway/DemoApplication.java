@@ -31,11 +31,6 @@ public class DemoApplication {
 									.filters(f -> f.setPath("/cookies"))
 									.uri("http://httpbin.org:80"))
 						
-						.route("resource", r -> r.path("/resource")
-								.filters(f -> f.filters(filterFactory.apply())
-												.removeRequestHeader("Cookie")) // Prevents cookie being sent downstream
-								.uri("http://resource:9000")) // Taking advantage of docker naming
-						
 			            .route(p -> p
 			            		.host("*.hystrix.com")
 			            		.filters(f -> f
@@ -43,11 +38,6 @@ public class DemoApplication {
 			            						.setName("mycmd")
 			            						.setFallbackUri("forward:/fallback")))
 			            		.uri("http://httpbin.org:80"))
-						
-						.route("hello", ps-> {
-							return ps.path("/hello")
-									.uri("lb://helloservice");
-						})
 						
 						.build();
 	}

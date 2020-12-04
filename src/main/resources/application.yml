@@ -7,9 +7,9 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8888/auth/realms/spring-cloud-gateway-realm
+            issuer-uri: http://localhost:9999/auth/realms/gateway-demo
         
         registration:
            keycloak:
-            client-id: spring-cloud-gateway-client
-            client-secret: 92038d4f-4120-4056-84b9-aa123912e770
+            client-id: spring-cloud-gateway-client            
+#           client-secret: 92038d4f-4120-4056-84b9-aa123912e770
