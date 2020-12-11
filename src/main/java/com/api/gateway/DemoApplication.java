@@ -1,5 +1,7 @@
 package com.api.gateway;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -16,9 +18,11 @@ public class DemoApplication {
 	
 	@Bean
 	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
+		
+		//add filter relay token for oauth2
 		return builder.routes()
 						.route(p -> p.path("/httpbin/**")
-									 .filters(f -> f.addRequestHeader("Hello", "World"))
+									 .filters(f -> f.addRequestHeader("Hello", "World") )
 									 .uri("http://httpbin.org:80"))
 						
 						.route(p -> p.path("/httpbin/cookies")
