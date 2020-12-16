@@ -30,7 +30,6 @@ public class RequestAudit {
 	        ServerHttpRequest request = exchange.getRequest();
 	        ServerHttpResponse response = exchange.getResponse();
 	        String serviceId = Objects.requireNonNull(route).getId();
-
 	     
 	        entity.setServiceId(serviceId);
 	        entity.setSourceIp(getRealIp(request));

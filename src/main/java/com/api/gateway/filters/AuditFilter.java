@@ -1,5 +1,9 @@
 package com.api.gateway.filters;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -39,11 +43,13 @@ public class AuditFilter implements GlobalFilter {
          return chain.filter(exchange)
                  .then()
                  .doOnSubscribe(t -> {
-                	 requestAuditDto.setStartTimestamp(startMillis);
+                	 LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(startMillis), ZoneId.systemDefault());
+                	 requestAuditDto.setRequestDate(date);
                 	 requestAudit.createAuditLog(exchange, requestAuditDto)
                 	 .subscribe();
                  }).doOnSuccess(aVoid  ->{
-                  	requestAuditDto.setEndTimestamp(System.currentTimeMillis() - startMillis);
+                	long endMillis = System.currentTimeMillis();
+                  	requestAuditDto.setRequestDuration(endMillis - startMillis);
                   	mongoTemplate.insert(requestAuditDto)
                   	.subscribe();
                  	}
