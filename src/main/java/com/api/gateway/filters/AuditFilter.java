@@ -44,7 +44,8 @@ public class AuditFilter implements GlobalFilter {
                 	 .subscribe();
                  }).doOnSuccess(aVoid  ->{
                   	requestAuditDto.setEndTimestamp(System.currentTimeMillis() - startMillis);
-                  	mongoTemplate.insert(requestAudit);
+                  	mongoTemplate.insert(requestAuditDto)
+                  	.subscribe();
                  	}
                  );
       }

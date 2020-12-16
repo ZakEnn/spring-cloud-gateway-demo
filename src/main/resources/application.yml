@@ -14,9 +14,10 @@ spring:
             client-id: spring-cloud-gateway-client            
   data:
     mongodb:
-      database: audit_db
       port: 27017
       host: localhost
+      database: audit_db
+
       
 audit:
   enabled: true
