@@ -12,15 +12,16 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http,
 	    ReactiveClientRegistrationRepository clientRegistrationRepository) {
-	  // Authenticate through configured OpenID Provider
+//	  // Authenticate through configured OpenID Provider
 	  http.oauth2Login();
-
-	  // Also logout at the OpenID Connect provider
+//
+//	  // Also logout at the OpenID Connect provider
 	  http.logout(logout -> logout.logoutSuccessHandler(
 	    new OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrationRepository)));
-
+	
 	  // Require authentication for all requests
-	  http.authorizeExchange().anyExchange().authenticated();
+	  http.authorizeExchange().pathMatchers("/httpbin/**").permitAll()
+	  	.anyExchange().authenticated();
 
 	  // Allow showing /home within a frame
 	 // http.headers().frameOptions().mode(Mode.SAMEORIGIN);

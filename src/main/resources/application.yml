@@ -12,4 +12,13 @@ spring:
         registration:
            keycloak:
             client-id: spring-cloud-gateway-client            
-#           client-secret: 92038d4f-4120-4056-84b9-aa123912e770
+  data:
+    mongodb:
+      database: audit_db
+      port: 27017
+      host: localhost
+      
+audit:
+  enabled: true
+
+  
