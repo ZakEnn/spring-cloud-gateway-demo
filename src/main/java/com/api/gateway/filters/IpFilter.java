@@ -1,9 +1,5 @@
 package com.api.gateway.filters;
 
-
-
-
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,7 +38,7 @@ public class IpFilter extends AbstractGatewayFilterFactory<IpFilter.Config> {
 	        return chain.filter(exchange)
 	        	// if you want to perform a custom postFilter         
 		        .then(Mono.fromRunnable(() -> {
-		        	log.info("First post filter");
+		        	log.info("Some post filter");
 				}));
 		};
 	}
