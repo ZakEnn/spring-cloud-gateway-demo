@@ -1,6 +1,12 @@
+# spring-cloud-gateway-demo
+
+Spring Boot application that uses Keycloak for the authentication process of routes defined on Spring Cloud Gateway.
+As well as an example of a custom IpWhiteList PreFilter and a RequestAudit GlobalFilter.
+
 # Keycloak Overview
 
-the Keycloak framework is an authentication and authorization server that can be used to secure your applications.
+Keycloak framework is an authentication and authorization server that can be used to secure your applications.
+
 It has many features as :
 - Single sign-on and single sign-out
 - Social login
@@ -11,13 +17,12 @@ It has many features as :
 
 # SCG Overview
 
-Spring cloud gateway is an enhanced reverse proxy with more advanced capabilities including orchestration and added security and monitoring capabilities.
+Spring cloud gateway is an enhanced reverse proxy built on top of Spring WebFlux providing a flexible way to route requests based on a number of criteria, as well as focuses on cross-cutting concerns such as security, resiliency, and monitoring.
+
+The main features of SCG are :
+- Routes that can process requests to downstream services.
+- Predicates that can match a Route on HTTP Request (Path, Method, Header, Host, etc…​).
+- Filters that can modify downstream HTTP Request and HTTP Response (Add/Remove Headers, Add/Remove Parameters, Rewrite Path, Set Path, Circuit Breaker, Rate Limiting etc…​).
 
 
-# spring-cloud-gateway-demo
-
-Spring Boot application uses Keycloak for authentication process of the routes defined on Spring Cloud Gateway.
-
-
-# Application Setup
 
