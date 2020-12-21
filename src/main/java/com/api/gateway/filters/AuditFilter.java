@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -21,15 +23,15 @@ import reactor.core.publisher.Mono;
 @Component
 @AllArgsConstructor
 public class AuditFilter implements GlobalFilter {
-  
+    private static final Logger log = LoggerFactory.getLogger(IpFilter.class);
+
     private Environment env;
 
-   
     private final ReactiveMongoTemplate mongoTemplate;
 
     @Autowired
     RequestAudit requestAudit;
-    
+
     @Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
          long startMillis = System.currentTimeMillis();
@@ -45,12 +47,13 @@ public class AuditFilter implements GlobalFilter {
                  .doOnSubscribe(t -> {
                 	 LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(startMillis), ZoneId.systemDefault());
                 	 requestAuditDto.setRequestDate(date);
-                	 requestAudit.createAuditLog(exchange, requestAuditDto)
+                     requestAudit.createAuditLog(exchange, requestAuditDto)
                 	 .subscribe();
                  }).doOnSuccess(aVoid  ->{
                 	long endMillis = System.currentTimeMillis();
                   	requestAuditDto.setRequestDuration(endMillis - startMillis);
-                  	mongoTemplate.insert(requestAuditDto)
+                     log.info("save Request audit : " + requestAuditDto);
+                     mongoTemplate.insert(requestAuditDto)
                   	.subscribe();
                  	}
                  );

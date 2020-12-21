@@ -1,9 +1,6 @@
 package com.api.gateway.service;
 
 import java.util.Objects;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.http.HttpHeaders;
@@ -19,13 +16,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class RequestAudit {
-	private static final Logger log = LoggerFactory.getLogger(RequestAudit.class);
-
     private static final String X_REAL_IP = "X-Real-IP";
     private static final String X_FORWARDED_FOR = "X-Forwarded-For";
     
-	 public Mono<RequestAuditDto> createAuditLog(ServerWebExchange exchange, RequestAuditDto entity) {        
-	        log.info("Audit request data to MongoDB");
+	 public Mono<RequestAuditDto> createAuditLog(ServerWebExchange exchange, RequestAuditDto entity) {
 	        Route route = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
 	        ServerHttpRequest request = exchange.getRequest();
 	        ServerHttpResponse response = exchange.getResponse();

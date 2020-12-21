@@ -8,15 +8,12 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
-
 import com.api.gateway.utils.IpUtils;
 
 import reactor.core.publisher.Mono;
 
-@Component
 public class IpFilter extends AbstractGatewayFilterFactory<IpFilter.Config> {
-	   private static final Logger log = LoggerFactory.getLogger(IpFilter.class);
+	private static final Logger log = LoggerFactory.getLogger(IpFilter.class);
 
 	public IpFilter() {
 		super(Config.class);

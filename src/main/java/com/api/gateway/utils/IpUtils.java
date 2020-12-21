@@ -4,6 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class IpUtils {
-	public static List<String>  WHITE_LISTS = Arrays.asList("129.22.23.12");
+	public static List<String>  WHITE_LISTS = Arrays.asList("127.0.0.1");
 
 }
