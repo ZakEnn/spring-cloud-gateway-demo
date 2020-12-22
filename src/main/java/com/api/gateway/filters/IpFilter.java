@@ -23,10 +23,9 @@ public class IpFilter extends AbstractGatewayFilterFactory<IpFilter.Config> {
 	public GatewayFilter apply(Config config) {
 		//Custom white list PreFilter to Check if remote address is within our secure range of @addr.
 		return (exchange, chain) -> {			
-			List<String> whitelist = IpUtils.WHITE_LISTS;
 	        // verify request remote address
-	        String id = exchange.getRequest().getRemoteAddress().getHostName();
-	        if (!whitelist.contains(id)) {
+	        String hostName = exchange.getRequest().getRemoteAddress().getHostName();
+	        if (!IpUtils.WHITE_LISTS.contains(hostName)) {
 	            ServerHttpResponse response = exchange.getResponse();
 	            response.setStatusCode(HttpStatus.UNAUTHORIZED);
 	            return response.setComplete();
