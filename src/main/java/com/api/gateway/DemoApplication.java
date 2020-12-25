@@ -1,5 +1,7 @@
 package com.api.gateway;
 
+import com.api.gateway.filters.IpFilter;
+import com.api.gateway.filters.IpFilter.Config;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,9 +9,6 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-
-import com.api.gateway.filters.IpFilter;
-import com.api.gateway.filters.IpFilter.Config;
 
 @SpringBootApplication
 @CommonsLog
@@ -36,7 +35,7 @@ public class DemoApplication {
 									.filters(f -> f.setPath("/cookies"))
 									.uri("http://httpbin.org:80"))
 						
-			            .route(p -> p.path("/anything")
+			            .route(p -> p.path("/anything/**")
 									.filters(f -> f.filter(new IpFilter().apply(new Config())))
 			            			.uri("http://httpbin.org:80"))
 
