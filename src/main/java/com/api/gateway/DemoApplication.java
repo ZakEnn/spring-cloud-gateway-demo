@@ -49,8 +49,7 @@ public class DemoApplication {
 						.route(p -> p.path("/httpbin/cookies")
 										.and()
 										.method(HttpMethod.GET)
-									.filters(f -> f.setPath("/cookies")
-						)
+									.filters(f -> f.setPath("/cookies"))
 									.uri("http://httpbin.org:80"))
 						
 			            .route(p -> p.path("/anything/**")
