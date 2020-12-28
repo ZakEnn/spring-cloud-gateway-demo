@@ -27,23 +27,20 @@ public class DemoApplication {
 		return exchange ->
 			 Mono.just(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress());
 	}
-	
+
 	@Bean
 	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
 
 		//add filter relay token for oauth2
-		//  todo: add circuit breaker on rate limit request
 		// todo: add docker-compose to setup dbs and keycloak
 		return builder.routes()
 						.route(p -> p.path("/headers")
 									 .filters(f -> f.addRequestHeader("Hello", "World")
-											 .requestRateLimiter()
-													 .rateLimiter( RedisRateLimiter.class,
-															 rl -> rl.setBurstCapacity(1).setReplenishRate(1)
-											// .requestRateLimiter(r ->
-											// 	r.setRateLimiter(new RedisRateLimiter(10, 10) )
-											// )
-									 ).and())
+											 		.requestRateLimiter().rateLimiter( RedisRateLimiter.class,
+															 rl -> rl.setBurstCapacity(2).setReplenishRate(2))
+											 		.and()
+											 		.circuitBreaker(c -> c.setFallbackUri("forward:/fallback/test"))
+									 )
 									 .uri("http://httpbin.org:80"))
 						
 						.route(p -> p.path("/httpbin/cookies")
