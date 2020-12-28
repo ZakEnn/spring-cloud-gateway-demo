@@ -1,13 +1,12 @@
 package com.api.gateway.controller;
 
 import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
@@ -25,18 +24,12 @@ public class GatewayController {
 	  }
 
 	  @GetMapping("/fallback/test")
-	  public Mono<Map<String,String>> fallbackTest(ServerWebExchange serverWebExchange){
-		  return serverWebExchange.getPrincipal().map(p -> {
-			  OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) p;
-			  OidcUser oidcUser = (OidcUser) token.getPrincipal();
-			  OidcIdToken idToken = oidcUser.getIdToken();
-
-			  Map<String, String> fallbackContent = new HashMap<>();
-				fallbackContent.put("Greeting", "Hello " + idToken.getFullName() + " \ud83d\ude0e");
-				fallbackContent.put("Message", "Server Does not work actually \ud83d\ude1e" );
-				fallbackContent.put("Note" , "We dont even have a cache \ud83d\ude25");
-		 		return  fallbackContent;
-		  });
-
+	  public Mono<Map<String,String>> fallbackTest(@AuthenticationPrincipal OidcUser principal){
+	  		OidcIdToken idToken = principal.getIdToken();
+	  		Map<String, String> fallbackContent = new HashMap<>();
+	  		fallbackContent.put("Greeting", "Hello " + idToken.getFullName() + " \ud83d\ude0e");
+	  		fallbackContent.put("Message", "Server Does not work actually \ud83d\ude1e" );
+	  		fallbackContent.put("Note" , "We dont even have a cache \ud83d\ude25");
+	  		return  Mono.just(fallbackContent);
 	  }
 }
