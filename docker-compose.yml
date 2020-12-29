@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    restart: always
+    container_name: redis-gateway
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongo-gateway
+    ports:
+      - 27017:27017
+
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    command:
+      - "-b 0.0.0.0"
+      - "-Dkeycloak.import=/opt/jboss/keycloak/realm-export.json"
+    ports:
+      - 9998:8080
+    volumes:
+      - ./imports/realm-export.json:/opt/jboss/keycloak/realm-export.json
+

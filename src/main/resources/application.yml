@@ -7,7 +7,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:9999/auth/realms/gateway-demo
+            issuer-uri: http://localhost:9998/auth/realms/gateway-demo
         
         registration:
            keycloak:
