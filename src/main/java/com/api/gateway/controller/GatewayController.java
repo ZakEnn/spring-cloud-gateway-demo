@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +17,9 @@ import java.util.Map;
 public class GatewayController {
 
 	  @GetMapping("/oidc/configuration")
-	  public Mono<?> test(Mono<Principal> principal) {
-		  WebClient client = WebClient.builder().baseUrl("http://localhost:9999/").build();
+	  public Mono<?> identityProviderConfiguration(@AuthenticationPrincipal OidcUser principal) {
+		  String providerAddr = principal.getIssuer().getProtocol() + "://" + principal.getIssuer().getAuthority();
+		  WebClient client = WebClient.builder().baseUrl(providerAddr).build();
 		  return Mono.from(client.get().uri("/auth/realms/gateway-demo/.well-known/openid-configuration").retrieve().bodyToMono(Map.class));
 	  }
 
