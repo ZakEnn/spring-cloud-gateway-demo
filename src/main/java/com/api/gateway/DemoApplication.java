@@ -30,9 +30,7 @@ public class DemoApplication {
 
 	@Bean
 	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
-
-		//add filter relay token for oauth2
-		// todo: add docker-compose to setup dbs and keycloak
+		//add filter relay token
 		return builder.routes()
 						.route(p -> p.path("/headers")
 									 .filters(f -> f.addRequestHeader("Hello", "World")
