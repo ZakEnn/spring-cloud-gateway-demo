@@ -24,5 +24,13 @@ The main features of SCG are :
 - Predicates that can match a Route on HTTP Request (Path, Method, Header, Host, etc…​).
 - Filters that can modify downstream HTTP Request and HTTP Response (Add/Remove Headers, Add/Remove Parameters, Rewrite Path, Set Path, Circuit Breaker, Rate Limiting etc…​).
 
+# Application Setup
 
+For running docker DBs instances (Redis, MongoDB and Keycloak) We should fire up the command:
+
+     $ docker-compose up -d
+
+After that go to the desired branch and run the app using maven command:
+
+     $ mvn spring-boot:run
 
