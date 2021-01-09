@@ -30,7 +30,7 @@ For running docker DBs instances (Redis, MongoDB and Keycloak) We should fire up
 
      $ docker-compose up -d
 
-After that go to the desired branch and run the app using maven command:
+After that run the app using maven command:
 
      $ mvn spring-boot:run
 

@@ -30,7 +30,7 @@ public class DemoApplication {
 
 	@Bean
 	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
-		//add filter relay token
+		//todo add filter relay token for something
 		return builder.routes()
 						.route(p -> p.path("/headers")
 									 .filters(f -> f.addRequestHeader("Hello", "World")
